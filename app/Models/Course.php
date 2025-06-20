@@ -21,6 +21,10 @@ class Course extends Model
         return $this->belongsTo(User::class, 'mentor_id')->where('role', 'mentor');
         
     }
+    public function meeting()
+     { 
+        return $this->belongsTo(Meeting::class); 
+    }
 
     // Relasi ke modul (tiap minggu)
     public function modules()

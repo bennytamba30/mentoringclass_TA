@@ -31,6 +31,9 @@ class MentorPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            
+
+
             ->default()
             ->discoverResources(
                 in: app_path('Filament/Mentor/Resources'),
