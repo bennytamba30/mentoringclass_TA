@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Admin\Resources;
+namespace App\Filament\Mentor\Resources;
 
-use App\Filament\Admin\Resources\AttendanceResource\Pages;
-use App\Filament\Admin\Resources\AttendanceResource\RelationManagers;
-use App\Models\Attendance;
+use App\Filament\Mentor\Resources\MeetingResource\Pages;
+use App\Filament\Mentor\Resources\MeetingResource\RelationManagers;
+use App\Models\Meeting;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class AttendanceResource extends Resource
+class MeetingResource extends Resource
 {
-    protected static ?string $model = Attendance::class;
+    protected static ?string $model = Meeting::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -56,9 +56,9 @@ class AttendanceResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAttendances::route('/'),
-            'create' => Pages\CreateAttendance::route('/create'),
-            'edit' => Pages\EditAttendance::route('/{record}/edit'),
+            'index' => Pages\ListMeetings::route('/'),
+            'create' => Pages\CreateMeeting::route('/create'),
+            'edit' => Pages\EditMeeting::route('/{record}/edit'),
         ];
     }
 }

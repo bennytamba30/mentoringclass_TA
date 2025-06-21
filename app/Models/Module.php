@@ -13,6 +13,7 @@ class Module extends Model
         'course_id',
         'title',
         'content',
+        'file_path',
     ];
 
     // Relasi ke course

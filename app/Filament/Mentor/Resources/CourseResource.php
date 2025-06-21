@@ -20,8 +20,9 @@ use Filament\Forms\Components\Hidden;
 class CourseResource extends Resource
 {
     protected static ?string $model = Course::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = '📚 My Courses';
+    
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-check';
+    protected static ?string $navigationGroup = '📆 Pertemuan';
 
     public static function form(Form $form): Form
     {

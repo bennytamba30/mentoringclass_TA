@@ -2,33 +2,29 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Submission extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'assignment_id',
         'mentee_id',
-        'file_path',
-        'grade',
+        'file',
         'feedback',
+        'score',
         'submitted_at',
     ];
 
-   // Relasi ke Assignment
-    public function assignment()
+    public function assignment(): BelongsTo
     {
         return $this->belongsTo(Assignment::class);
     }
 
-    // Relasi ke Mentee
-        public function mentee()
+    public function mentee(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'mentee_id')->where('role', 'mentee');
+        return $this->belongsTo(User::class, 'mentee_id');
     }
-
 }
+
 

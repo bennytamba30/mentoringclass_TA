@@ -9,14 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-   public function up()
+  public function up(): void
 {
     Schema::create('assignments', function (Blueprint $table) {
         $table->id();
-        $table->foreignId('module_id')->constrained()->onDelete('cascade');
+        $table->foreignId('course_id')->constrained()->onDelete('cascade');
         $table->string('title');
-        $table->text('description')->nullable();
-        $table->date('due_date')->nullable();
+        $table->text('description');
+        $table->string('attachment')->nullable(); // file tugas dari mentor
+        $table->dateTime('deadline');
         $table->timestamps();
     });
 }

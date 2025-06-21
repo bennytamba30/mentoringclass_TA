@@ -9,22 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
 {
     Schema::create('submissions', function (Blueprint $table) {
         $table->id();
-        $table->foreignId('assignment_id')
-            ->constrained()
-            ->onDelete('cascade');
-        $table->foreignId('mentee_id')
-            ->constrained('users')
-            ->onDelete('cascade');
-
-        $table->text('answer')->nullable();
-        $table->string('file_path')->nullable();
-        $table->timestamp('submitted_at')->nullable();
-        $table->integer('grade')->nullable();
-        $table->text('feedback')->nullable();
+        $table->foreignId('assignment_id')->constrained()->onDelete('cascade');
+        $table->foreignId('mentee_id')->constrained('users')->onDelete('cascade');
+        $table->string('file'); // jawaban mentee
+        $table->text('feedback')->nullable(); // komentar dari mentor
+        $table->integer('score')->nullable(); // nilai
+        $table->timestamp('submitted_at')->nullable(); // kapan dikumpulkan
         $table->timestamps();
     });
 }

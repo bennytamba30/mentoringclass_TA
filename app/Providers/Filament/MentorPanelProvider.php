@@ -27,10 +27,13 @@ class MentorPanelProvider extends PanelProvider
             ->id('mentor')
             ->path('mentor')
             ->login()
+            ->profile()
             ->authGuard('web') // pakai guard 'web' jika shared dengan admin
             ->colors([
                 'primary' => Color::Amber,
             ])
+
+            
             
 
 
@@ -67,4 +70,6 @@ class MentorPanelProvider extends PanelProvider
                 EnsureUserIsMentor::class,
             ]);
     }
+
+    
 }

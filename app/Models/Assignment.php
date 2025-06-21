@@ -2,26 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Assignment extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
-        'module_id',     // Ganti dari course_id ke module_id
+        'course_id',
         'title',
         'description',
-        'deadline',
+        'deadline ',
     ];
 
-    public function module()
+    public function course(): BelongsTo
     {
-        return $this->belongsTo(Module::class);
+        return $this->belongsTo(Course::class);
     }
 
-    public function submissions()
+    public function submissions(): HasMany
     {
         return $this->hasMany(Submission::class);
     }

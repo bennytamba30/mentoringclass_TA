@@ -52,6 +52,7 @@ class User extends Authenticatable
         return $this->hasMany(Course::class, 'mentor_id');
     }
 
+
     public function mentees()
     {
         // Untuk mentor melihat mentee-nya

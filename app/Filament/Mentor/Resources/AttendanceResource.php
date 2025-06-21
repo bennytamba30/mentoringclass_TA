@@ -108,8 +108,10 @@ class AttendanceResource extends Resource
     }
 
     public static function getEloquentQuery(): Builder
-    {
-        // Hanya tampilkan absensi yang dibuat mentor ini (jika perlu)
-        return parent::getEloquentQuery();
-    }
+{
+    return parent::getEloquentQuery()
+        ->whereHas('meeting', function ($query) {
+            $query->where('mentor_id', auth()->id());
+        });
+}
 }
