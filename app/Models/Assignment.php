@@ -12,7 +12,8 @@ class Assignment extends Model
         'course_id',
         'title',
         'description',
-        'deadline ',
+        'deadline',      // ✅ tanpa spasi
+        'attachment',    // ✅ tambahkan ini
     ];
 
     public function course(): BelongsTo

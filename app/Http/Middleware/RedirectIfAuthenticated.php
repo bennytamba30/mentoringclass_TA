@@ -15,15 +15,14 @@ class RedirectIfAuthenticated
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
         if (Auth::check()) {
-            $role = Auth::user()->role;
-
-            return match ($role) {
-                'admin' => !$request->is('admin*') ? redirect('/admin') : $next($request),
-                'mentor' => !$request->is('mentor*') ? redirect('/mentor') : $next($request),
-                'mentee' => !$request->is('mentee*') ? redirect('/mentee') : $next($request),
-                default => abort(403, 'Role tidak dikenali'),
-            };
-        }
+    $user = Auth::user();
+    return match ($user->role) {
+        'admin' => redirect('/admin'),
+        'mentor' => redirect('/mentor'),
+        'mentee' => redirect()->route('mentee.dashboard'),
+        default => redirect('/'),
+    };
+}
 
         return $next($request);
     }

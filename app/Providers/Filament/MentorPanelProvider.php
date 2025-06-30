@@ -7,7 +7,6 @@ use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsureUserIsMentor;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -18,6 +17,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Filament\Navigation\NavigationItem; 
 
 class MentorPanelProvider extends PanelProvider
 {
@@ -28,15 +28,10 @@ class MentorPanelProvider extends PanelProvider
             ->path('mentor')
             ->login()
             ->profile()
-            ->authGuard('web') // pakai guard 'web' jika shared dengan admin
+            ->authGuard('web')
             ->colors([
                 'primary' => Color::Amber,
             ])
-
-            
-            
-
-
             ->default()
             ->discoverResources(
                 in: app_path('Filament/Mentor/Resources'),
@@ -53,6 +48,9 @@ class MentorPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
             ])
+            ->navigationItems([
+            
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -64,12 +62,9 @@ class MentorPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
-
             ->authMiddleware([
                 'auth',
                 EnsureUserIsMentor::class,
             ]);
     }
-
-    
 }

@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         // User admin
         User::factory()->create([
-            'name' => 'Test User',
+            'name' => 'Admin Benny',
             'mentor_id' => 1,
             'email' => 'bennytamba3004@gmail.com',
             'password' => Hash::make('12345678'),
@@ -23,11 +23,21 @@ class DatabaseSeeder extends Seeder
 
         // User mentor
         User::create([
-            'name' => 'Mentor Satu',
+            'name' => 'Mentor Nurul',
             'mentor_id' => 2,
-            'email' => 'mentor@example.com',
-            'password' => bcrypt('00000000'),
+            'email' => 'nurul123@gmail.com',
+            'password' => bcrypt('nurul123'),
             'role' => 'mentor',
+            'status' => 'active',
+        ]);
+
+        // User mentee
+        User::create([
+            'name' => 'Mentee gress',
+            'mentor_id' => 2,
+            'email' => 'gress123@gmail.com',
+            'password' => bcrypt('gress123'),
+            'role' => 'mentee',
             'status' => 'active',
         ]);
     }

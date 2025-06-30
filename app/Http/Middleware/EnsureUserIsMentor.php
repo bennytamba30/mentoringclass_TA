@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class EnsureUserIsMentor
@@ -11,13 +12,15 @@ class EnsureUserIsMentor
     /**
      * Handle an incoming request.
      */
-     public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check() || auth()->user()->role !== 'mentor') {
-            return redirect()->to(match (auth()->user()->role ?? '') {
+        if (!Auth::check() || Auth::user()->role !== 'mentor') {
+            $role = Auth::user()->role ?? null;
+
+            return redirect()->to(match ($role) {
                 'admin' => '/admin',
-                'mentee' => '/mentee',
-                default => '/',
+                'mentee' => '/mentee/dashboard',
+                default => '/login',
             });
         }
 

@@ -38,9 +38,11 @@ protected function pages(): array
             ->id('admin')
             ->path('admin')
             ->login()
+            ->profile()
             ->authGuard('web') // atau 'admin' kalau kamu pakai guard berbeda
             ->colors([
                 'primary' => Color::Amber,
+                
             ])
             ->discoverResources(
                 in: app_path('Filament/Admin/Resources'),

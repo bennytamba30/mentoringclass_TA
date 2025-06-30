@@ -11,6 +11,7 @@ class Course extends Model
 
     protected $fillable = [
         'mentor_id',
+        'meeting_id',
         'title',
         'description',
     ];

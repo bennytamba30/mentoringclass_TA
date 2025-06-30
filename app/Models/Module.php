@@ -12,7 +12,7 @@ class Module extends Model
     protected $fillable = [
         'course_id',
         'title',
-        'content',
+        'description',
         'file_path',
     ];
 

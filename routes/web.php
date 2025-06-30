@@ -2,7 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Mentee\DashboardController;
+use App\Http\Controllers\Mentee\MenteeCourseController;
+use App\Http\Controllers\Mentee\MenteeAssignmentController;
+use App\Http\Controllers\Mentee\MenteeAttendanceController;
+use App\Http\Controllers\Mentee\MenteeGradeController;
+use App\Http\Controllers\Mentee\MenteeAnnouncementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -10,65 +16,60 @@ use Illuminate\Http\Request;
 |--------------------------------------------------------------------------
 */
 
-// Halaman utama
+// ✅ Halaman Awal (Welcome)
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Test relasi mentor-mentee
+// ✅ Redirect login Filament ke login custom
+Route::redirect('/admin/login', '/login');
+Route::redirect('/mentor/login', '/login');
 
-
-// -------------------
-// 🔐 Login & Logout
-// -------------------
+// ✅ ROUTES UNTUK GUEST (belum login)
 Route::middleware('guest')->group(function () {
-    Route::get('/login', function () {
-        return view('auth.login');
-    })->name('login');
-
-    Route::post('/login', function (Request $request) {
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::guard('admin')->attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('/admin');
-        }
-
-        if (Auth::guard('mentor')->attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('/mentor');
-        }
-
-        if (Auth::guard('web')->attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
-        }
-
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
-    });
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [LoginController::class, 'login']);
 });
 
-// Logout semua guard
-Route::post('/logout', function (Request $request) {
-    Auth::guard('admin')->logout();
-    Auth::guard('mentor')->logout();
-    Auth::guard('web')->logout();
+// ✅ ROUTES UNTUK YANG SUDAH LOGIN
+Route::middleware('auth')->group(function () {
 
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
+    // ✅ Logout
+    Route::post('/logout', function () {
+        Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        return redirect('/login');
+    })->name('logout');
 
-    return redirect('/login');
-})->name('logout');
+    /*
+    |--------------------------------------------------------------------------
+    | PANEL MENTEE
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware('mentee.role') // Pastikan middleware ini sesuai
+        ->prefix('mentee')
+        ->name('mentee.')
+        ->group(function () {
 
-// ---------------------------
-// 📄 Dashboard untuk mentee
-// ---------------------------
-Route::middleware(['auth:web'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('mentee.dashboard', [
-            'user' => Auth::guard('web')->user()
-        ]);
-    })->name('dashboard');
+        // ✅ Dashboard
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        // ✅ Kursus Saya
+        Route::get('/courses', [MenteeCourseController::class, 'index'])->name('courses.index');
+        Route::get('/courses/{id}', [MenteeCourseController::class, 'show'])->name('courses.show');
+
+        // ✅ Tugas
+        Route::get('/assignments', [MenteeAssignmentController::class, 'index'])->name('assignments.index');
+        Route::get('/assignments/{id}', [MenteeAssignmentController::class, 'show'])->name('assignments.show');
+        Route::post('/assignments/{id}/submit', [MenteeAssignmentController::class, 'submit'])->name('assignments.submit');
+
+        // ✅ Kehadiran
+        Route::get('/attendances', [MenteeAttendanceController::class, 'index'])->name('attendances.index');
+
+        // ✅ Pengumuman
+        Route::get('/announcements', [MenteeAnnouncementController::class, 'index'])->name('announcements.index');
+
+    
+    });
 });

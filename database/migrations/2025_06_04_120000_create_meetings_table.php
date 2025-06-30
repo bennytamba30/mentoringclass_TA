@@ -9,9 +9,9 @@ return new class extends Migration {
     {
         Schema::create('meetings', function (Blueprint $table) {
             $table->id();
-            $table->string('title'); // Contoh: "Pertemuan 1"
+            $table->string('title');
+            $table->date('date'); 
             $table->text('description')->nullable();
-            $table->date('date')->nullable(); // Tanggal pertemuan
             $table->timestamps();
         });
     }
