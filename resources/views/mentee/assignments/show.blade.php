@@ -11,7 +11,16 @@
     @endif
 
     <div class="mt-6">
-        <a href="{{ route('mentee.submissions.create', $assignment->id) }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Kumpulkan Tugas</a>
-    </div>
+    <form action="{{ route('mentee.assignments.submit', $assignment->id) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+        @csrf
+
+        <label for="file" class="block text-gray-700 font-medium">Unggah File Tugas (PDF, max 2MB)</label>
+        <input type="file" name="file" id="file" class="block w-full border rounded p-2" required>
+
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            Kumpulkan Tugas
+        </button>
+    </form>
+</div>
 </div>
 @endsection

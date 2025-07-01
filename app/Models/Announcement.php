@@ -12,12 +12,11 @@ class Announcement extends Model
     protected $fillable = [
         'title',
         'content',
-        'posted_by',
-        'visible_to',
+        'mentor_id',
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'posted_by');
-    }
+    public function mentor()
+{
+    return $this->belongsTo(User::class, 'mentor_id');
+}
 }

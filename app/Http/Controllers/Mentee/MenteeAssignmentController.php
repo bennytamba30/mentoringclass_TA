@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Mentee;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Assignment;
+use Illuminate\Http\Request;
+use App\Models\Submission;
 
 class MenteeAssignmentController extends Controller
 {
@@ -25,4 +27,24 @@ class MenteeAssignmentController extends Controller
 
         return view('mentee.assignments.show', compact('assignment'))->with('title', $assignment->title);
     }
+
+    public function submit(Request $request, $assignmentId)
+{
+    $request->validate([
+        'file' => 'required|file|max:2048',
+    ]);
+
+    $user = Auth::user();
+
+    $filePath = $request->file('file')->store('submissions', 'public');
+
+    Submission::create([
+        'assignment_id' => $assignmentId,
+        'mentee_id' => $user->id,
+        'file' => $filePath,
+        'submitted_at' => now(),
+    ]);
+
+    return redirect()->back()->with('success', 'Tugas berhasil dikumpulkan.');
+}
 }

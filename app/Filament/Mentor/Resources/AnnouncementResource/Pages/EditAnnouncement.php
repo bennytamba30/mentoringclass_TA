@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Admin\Resources\AnnouncementResource\Pages;
+namespace App\Filament\Mentor\Resources\AnnouncementResource\Pages;
 
-use App\Filament\Admin\Resources\AnnouncementResource;
+use App\Filament\Mentor\Resources\AnnouncementResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 

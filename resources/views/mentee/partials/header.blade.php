@@ -1,18 +1,17 @@
 <header class="w-full bg-white shadow-lg p-4 flex items-center justify-between border-b border-slate-200">
-    <!-- Salam dan Nama -->
-    <div>
+    <!-- Mobile menu toggle for smaller screens (moved to far left on mobile) -->
+    <button id="menuToggle" class="md:hidden text-slate-600 focus:outline-none p-2 rounded-lg hover:bg-slate-100 transition duration-200 order-first">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+    </button>
+
+    <!-- Salam dan Nama (hidden on mobile, block on md and up) -->
+    <div class="hidden md:block">
         <h1 class="text-xl md:text-2xl font-semibold text-slate-800">Halo, {{ Auth::user()->name ?? 'Pengguna' }}!</h1>
-        <p class="text-sm text-slate-500 hidden md:block">Selamat datang kembali di Mentoring Class.</p>
+        <p class="text-sm text-slate-500">Selamat datang kembali di Mentoring Class.</p>
     </div>
 
-    <!-- Mobile menu toggle and Profile/Dropdown for Desktop -->
-    <div class="flex items-center gap-4">
-        <!-- Mobile menu toggle for smaller screens -->
-        <button id="menuToggle" class="md:hidden text-slate-600 focus:outline-none p-2 rounded-lg hover:bg-slate-100 transition duration-200">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-        </button>
-
-        <!-- Profile and Dropdown -->
+    <!-- Profile and Dropdown (remains on right, pushed by ml-auto on mobile) -->
+    <div class="flex items-center gap-4 ml-auto md:ml-0">
         <div class="relative">
             <!-- Tombol Profil -->
             <button id="profileButton" class="flex items-center gap-2 focus:outline-none bg-slate-50 p-2 rounded-full hover:bg-slate-100 transition duration-200">

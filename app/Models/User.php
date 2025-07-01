@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -17,61 +18,77 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role', // admin, mentor, mentee
+        'role',        // admin, mentor, mentee
+        'mentor_id',
+        'nim',
+        'kelas',
+        'photo',       // path relatif ke storage
     ];
 
     /**
-     * Role checkers
+     * Cast attributes
      */
-    public function isAdmin()
-    {
-        return $this->role === 'admin';
-    }
-
-    public function isMentor()
-    {
-        return $this->role === 'mentor';
-    }
-
-    public function isMentee()
-    {
-        return $this->role === 'mentee';
-    }
-
-    /**
-     * Relasi tambahan sesuai kebutuhan
-     */
-    public function announcements()
-    {
-        return $this->hasMany(Announcement::class, 'posted_by');
-    }
-
-    public function courses()
-    {
-        // Untuk mentor
-        return $this->hasMany(Course::class, 'mentor_id');
-    }
-
-
-    public function mentees()
-    {
-        // Untuk mentor melihat mentee-nya
-        return $this->hasMany(User::class, 'mentor_id')->where('role', 'mentee');
-    }
-
-    public function mentor()
-    {
-        // Untuk mentee melihat siapa mentor-nya
-        return $this->belongsTo(User::class, 'mentor_id')->where('role', 'mentor');
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
 
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
+    /**
+     * Role Checkers
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isMentor(): bool
+    {
+        return $this->role === 'mentor';
+    }
+
+    public function isMentee(): bool
+    {
+        return $this->role === 'mentee';
+    }
+
+    /**
+     * Relasi
+     */
+ 
+
+    public function courses(): HasMany
+    {
+        return $this->hasMany(Course::class, 'mentor_id');
+    }
+
+    public function mentees(): HasMany
+    {
+        return $this->hasMany(User::class, 'mentor_id')->where('role', 'mentee');
+    }
+
+    public function mentor(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'mentor_id')->where('role', 'mentor');
+    }
+
+    /**
+     * Get URL foto user (helper untuk digunakan di mana saja)
+     */
+    public function getPhotoUrl(): string
+    {
+        return $this->photo
+            ? Storage::url($this->photo)
+            : url('/default-avatar.png'); // fallback default avatar
+    }
+
+    public function announcements()
+    {
+        return $this->hasMany(Announcement::class, 'mentor_id');
+    }
+
 }

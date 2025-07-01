@@ -24,7 +24,7 @@ class ModulesRelationManager extends RelationManager
                 ->label('Judul Modul')
                 ->required(),
 
-            Textarea::make('content')->nullable()
+            Textarea::make('description')->nullable()
                 ->label('Deskripsi')
                 ->required(),
 
@@ -46,7 +46,7 @@ class ModulesRelationManager extends RelationManager
         return $table
             ->columns([
                 TextColumn::make('title')->label('Judul'),
-                TextColumn::make('content')->limit(50)->label('Deskripsi'),
+                TextColumn::make('description')->limit(50)->label('Deskripsi'),
 
                 TextColumn::make('file_path')
                     ->label('File')

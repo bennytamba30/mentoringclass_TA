@@ -38,7 +38,7 @@ class DashboardController extends Controller
         // Pengumuman terbaru dari mentor
         $latestAnnouncement = Announcement::where('mentor_id', $user->mentor_id)
             ->latest()
-            ->first()?->title;
+            ->first();
 
         return view('mentee.dashboard', [
             'user' => $user,

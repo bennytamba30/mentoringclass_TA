@@ -15,10 +15,9 @@ class MenteeResource extends Resource
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
-    protected static ?string $navigationLabel = 'Mentees';
+    protected static ?string $navigationLabel = 'Daftar Mentee';
     protected static ?string $pluralLabel = 'Mentees';
     protected static ?string $modelLabel = 'Mentee';
-
 
     public static function canCreate(): bool
     {
@@ -27,7 +26,6 @@ class MenteeResource extends Resource
 
     public static function form(\Filament\Forms\Form $form): \Filament\Forms\Form
     {
-        // Form tidak diperlukan di panel mentor (hanya lihat data)
         return $form->schema([]);
     }
 
@@ -35,15 +33,35 @@ class MenteeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')->label('User ID'),
-                Tables\Columns\TextColumn::make('name')->searchable(),
-                Tables\Columns\TextColumn::make('email')->searchable(),
-                Tables\Columns\TextColumn::make('status')->badge(),
-                Tables\Columns\TextColumn::make('created_at')->label('Registered')->dateTime(),
+                Tables\Columns\ImageColumn::make('photo')
+                    ->label('Foto')
+                    ->circular()
+                    ->height(40),
+
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Nama')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('nim')
+                    ->label('NIM')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('kelas')
+                    ->label('Kelas'),
+
+                Tables\Columns\TextColumn::make('email')
+                    ->label('Email')
+                    ->searchable(),
+
+                
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Terdaftar')
+                    ->dateTime(),
             ])
             ->filters([])
-            ->actions([]) // Hapus Edit/Delete dari sisi mentor
-            ->bulkActions([]); // Tidak perlu aksi bulk juga
+            ->actions([])
+            ->bulkActions([]);
     }
 
     public static function getEloquentQuery(): Builder

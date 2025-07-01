@@ -61,4 +61,9 @@ class MeetingResource extends Resource
             'edit' => Pages\EditMeeting::route('/{record}/edit'),
         ];
     }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Daftar Pertemuan';
+    }
 }

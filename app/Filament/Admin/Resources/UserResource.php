@@ -12,6 +12,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ImageColumn;
 
 class UserResource extends Resource
 {
@@ -27,6 +28,18 @@ class UserResource extends Resource
                 ->required()
                 ->maxLength(255),
 
+            Forms\Components\TextInput::make('nim')
+                ->label('NIM')
+                ->numeric() // hanya angka
+                ->minLength(10)
+                ->maxLength(10)
+                ->rules(['digits:10'])
+                ->unique(ignoreRecord: true),
+
+            Forms\Components\TextInput::make('kelas')
+                ->label('Kelas')
+                ->maxLength(50),
+
             Forms\Components\TextInput::make('email')
                 ->required()
                 ->email()
@@ -41,8 +54,7 @@ class UserResource extends Resource
                     'admin' => 'Admin',
                     'mentor' => 'Mentor',
                     'mentee' => 'Mentee',
-                ])
-                ->default('mentee'),
+                ]),
 
             Forms\Components\Select::make('mentor_id')
                 ->label('Mentor')
@@ -50,48 +62,68 @@ class UserResource extends Resource
                 ->visible(fn ($get) => $get('role') === 'mentee')
                 ->required(fn ($get) => $get('role') === 'mentee'),
 
-            Forms\Components\Select::make('status')
-                ->required()
-                ->options([
-                    'active' => 'Active',
-                    'inactive' => 'Inactive',
-                ])
-                ->default('active'),
-
             Forms\Components\TextInput::make('password')
                 ->label('Password')
                 ->password()
+                ->revealable()
                 ->required(fn (string $context): bool => $context === 'create')
                 ->minLength(6)
                 ->dehydrateStateUsing(fn (string $state): string => bcrypt($state))
                 ->dehydrated(fn (?string $state): bool => filled($state))
                 ->maxLength(255),
+
+            Forms\Components\FileUpload::make('photo')
+                ->label('Foto')
+                ->image()
+                ->maxSize(2048) // 2MB
+                ->directory('photos')
+                ->visibility('public')
+                ->previewable(true),
         ]);
     }
 
     public static function table(Table $table): Table
     {
-        $isMenteeFiltered = data_get(request()->query('tableFilters'), 'role.value') === 'mentee';
-
         return $table
+            ->modifyQueryUsing(fn (Builder $query) =>
+                $query->whereIn('role', ['mentor', 'mentee'])
+            )
             ->columns([
-                TextColumn::make('id')->sortable()->label('User ID'),
-                TextColumn::make('name')->searchable()->sortable(),
-                TextColumn::make('email')->searchable(),
-                TextColumn::make('role')->badge(),
-                TextColumn::make('status')->badge(),
-                TextColumn::make('created_at')->label('Registered')->dateTime(),
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
 
-               TextColumn::make('mentor.name')
-                ->label('Mentor')
-                ->visible(fn () => data_get(request()->query('tableFilters'), 'role.value') === 'mentee')
-                ->default('-'),
+                 TextColumn::make('nim')
+                    ->label('NIM'),
+    
+                TextColumn::make('kelas')
+                    ->label('Kelas'),
+
+                TextColumn::make('email')
+                    ->searchable(),
+
+                TextColumn::make('role')
+                    ->badge(),
+
+                ImageColumn::make('photo')
+                    ->label('Foto')
+                    ->circular()
+                    ->height(40)
+                    ->width(40)
+                    ->defaultImageUrl(asset('storage/default-avatar.png')),
+
+                 TextColumn::make('mentor.name')
+                    ->label('Mentor')
+                    ->default('-')
+                    ->formatStateUsing(fn ($state, $record) =>
+                    $record->role === 'mentee' && $record->mentor ? $record->mentor->name : '-'
+                    ),
+
             ])
             ->filters([
                 SelectFilter::make('role')
                     ->label('Filter by Role')
                     ->options([
-                        'admin' => 'Admin',
                         'mentor' => 'Mentor',
                         'mentee' => 'Mentee',
                     ]),
@@ -113,12 +145,16 @@ class UserResource extends Resource
     }
 
     public static function getEloquentQuery(): Builder
-{
-    $isMenteeFiltered = data_get(request()->query('tableFilters'), 'role.value') === 'mentee';
+    {
 
-    return parent::getEloquentQuery()
-        ->when($isMenteeFiltered, fn ($query) => $query->with('mentor'));
-}
+    /**
+   
+     *
+     * @return Builder
+     */
+       return parent::getEloquentQuery()
+            ->with('mentor');
+    }
 
     public static function getPages(): array
     {
@@ -128,4 +164,5 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
+
 }

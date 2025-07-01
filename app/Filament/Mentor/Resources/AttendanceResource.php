@@ -19,6 +19,10 @@ class AttendanceResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-check';
     protected static ?string $navigationGroup = '📆 Pertemuan';
+    protected static ?string $pluralLabel = 'Absensi';
+    protected static ?string $navigationLabel = 'Absensi';
+   
+
 
     public static function form(Form $form): Form
     {
@@ -97,6 +101,7 @@ class AttendanceResource extends Resource
     {
         return [];
     }
+    
 
     public static function getPages(): array
     {
@@ -114,4 +119,6 @@ class AttendanceResource extends Resource
             $query->where('mentor_id', auth()->id());
         });
 }
+
+
 }

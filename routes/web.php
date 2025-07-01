@@ -68,7 +68,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/attendances', [MenteeAttendanceController::class, 'index'])->name('attendances.index');
 
         // ✅ Pengumuman
-        Route::get('/announcements', [MenteeAnnouncementController::class, 'index'])->name('announcements.index');
+         Route::get('/announcements', [MenteeAnnouncementController::class, 'index'])->name('announcements.index');
+        Route::get('/announcements/{id}', [MenteeAnnouncementController::class, 'show'])->name('announcements.show');
 
     
     });
