@@ -50,7 +50,7 @@
 
     <!-- Tugas Section -->
     <div class="bg-white p-6 rounded-xl shadow-lg">
-        <h2 class="text-2xl font-semibold text-slate-700 mb-5 border-b pb-3">📝 Tugas Kursus</h2>
+        <h2 class="text-2xl font-semibold text-slate-700 mb-5 border-b pb-3">📝 Tugas</h2>
         @if ($course->assignments->isEmpty())
             <p class="text-slate-500 italic py-4 text-center">Belum ada tugas untuk kursus ini.</p>
         @else

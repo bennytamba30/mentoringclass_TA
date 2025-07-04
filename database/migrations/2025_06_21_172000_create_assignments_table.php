@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->foreignId('course_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->date('deadline')->nullable(); // hasil dari migrasi `make_deadline_nullable`
+            $table->dateTime('deadline')->nullable();
             $table->string('attachment')->nullable(); // hasil dari migrasi `update_assignments_table_columns`
             $table->timestamps();
         });

@@ -7,8 +7,9 @@ use App\Http\Controllers\Mentee\DashboardController;
 use App\Http\Controllers\Mentee\MenteeCourseController;
 use App\Http\Controllers\Mentee\MenteeAssignmentController;
 use App\Http\Controllers\Mentee\MenteeAttendanceController;
-use App\Http\Controllers\Mentee\MenteeGradeController;
+use App\Livewire\Mentor\Attendance\BulkAttendancePage;
 use App\Http\Controllers\Mentee\MenteeAnnouncementController;
+use App\Http\Controllers\Mentee\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,8 @@ Route::middleware('auth')->group(function () {
         return redirect('/login');
     })->name('logout');
 
+
+
     /*
     |--------------------------------------------------------------------------
     | PANEL MENTEE
@@ -55,6 +58,10 @@ Route::middleware('auth')->group(function () {
         // ✅ Dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+        //profil
+        Route::get('/profile', [\App\Http\Controllers\Mentee\ProfileController::class, 'edit'])->name('profile.edit');
+        Route::post('/profile', [\App\Http\Controllers\Mentee\ProfileController::class, 'update'])->name('profile.update');
+
         // ✅ Kursus Saya
         Route::get('/courses', [MenteeCourseController::class, 'index'])->name('courses.index');
         Route::get('/courses/{id}', [MenteeCourseController::class, 'show'])->name('courses.show');
@@ -64,13 +71,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/assignments/{id}', [MenteeAssignmentController::class, 'show'])->name('assignments.show');
         Route::post('/assignments/{id}/submit', [MenteeAssignmentController::class, 'submit'])->name('assignments.submit');
 
-        // ✅ Kehadiran
+        //✅ Kehadiran
         Route::get('/attendances', [MenteeAttendanceController::class, 'index'])->name('attendances.index');
 
         // ✅ Pengumuman
          Route::get('/announcements', [MenteeAnnouncementController::class, 'index'])->name('announcements.index');
         Route::get('/announcements/{id}', [MenteeAnnouncementController::class, 'show'])->name('announcements.show');
 
-    
     });
+
+
+    return redirect('/login')->with('status', 'Logout berhasil!');
 });

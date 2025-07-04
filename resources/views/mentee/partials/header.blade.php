@@ -25,14 +25,21 @@
             <!-- Dropdown -->
             <div id="profileDropdown"
                 class="hidden absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-lg shadow-xl z-50 overflow-hidden">
-                <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-100 transition duration-200">
+               <a href="{{ route('mentee.profile.edit') }}" class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-100 transition duration-200">
                     ⚙️ Pengaturan Profil
                 </a>
-                <form action="{{ route('logout') }}" method="POST">
+                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit"
-                        class="w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition duration-200">
-                        🚪 Logout
+                        class="w-full flex items-center gap-2 px-4 py-3 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                            <polyline points="16 17 21 12 16 7" />
+                            <line x1="21" x2="9" y1="12" y2="12" />
+                        </svg>
+                        Logout
                     </button>
                 </form>
             </div>

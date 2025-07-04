@@ -12,8 +12,13 @@ class Assignment extends Model
         'course_id',
         'title',
         'description',
-        'deadline',      // ✅ tanpa spasi
-        'attachment',    // ✅ tambahkan ini
+        'deadline',
+        'attachment',
+    ];
+
+    // ✅ CAST agar deadline bisa pakai ->format() atau isPast(), dll.
+    protected $casts = [
+        'deadline' => 'datetime',
     ];
 
     public function course(): BelongsTo

@@ -9,7 +9,14 @@ class Meeting extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'date', 'description'];
+    protected $fillable = [
+        'title',
+        'date',
+        'description'];
+
+     protected $casts = [
+        'date' => 'datetime',
+    ];
 
     public function courses()
     {

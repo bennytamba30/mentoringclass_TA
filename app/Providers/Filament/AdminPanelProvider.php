@@ -6,11 +6,12 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
-use Filament\Support\Colors\Color;
 use Filament\Support\Assets\Css;
-use Filament\Support\Facades\FilamentAsset;
-use Filament\Support\Facades\FilamentView;
+use Filament\Support\Colors\Color;
 use App\Http\Middleware\EnsureUserIsAdmin;
+use Filament\Support\Facades\FilamentView;
+use Jeffgreco13\FilamentBreezy\BreezyCore;
+use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -79,6 +80,20 @@ protected function pages(): array
                 Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
             ])
+            
+            ->plugin(
+                BreezyCore::make()
+                ->myProfile(
+                    shouldRegisterUserMenu: true, // Sets the 'account' link in the panel User Menu (default = true)
+                    userMenuLabel: 'My Profile', // Customizes the 'account' link label in the panel User Menu (default = null)
+                    shouldRegisterNavigation: false, // Adds a main navigation item for the My Profile page (default = false)
+                    navigationGroup: 'Settings', // Sets the navigation group for the My Profile page (default = null)
+                    hasAvatars: true, // Enables the avatar upload form component (default = false)
+                    slug: 'my-profile' // Sets the slug for the profile page (default = 'my-profile')
+                )
+            )
+
+
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

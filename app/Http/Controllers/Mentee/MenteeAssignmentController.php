@@ -25,26 +25,48 @@ class MenteeAssignmentController extends Controller
         $user = Auth::user();
         $assignment = Assignment::whereHas('course', fn($q) => $q->where('mentor_id', $user->mentor_id))->findOrFail($id);
 
-        return view('mentee.assignments.show', compact('assignment'))->with('title', $assignment->title);
+        // ✅ Ambil data submission jika sudah ada
+        $submission = Submission::where('assignment_id', $assignment->id)
+            ->where('mentee_id', $user->id)
+            ->first();
+
+        return view('mentee.assignments.show', compact('assignment', 'submission'))->with('title', $assignment->title);
     }
 
-    public function submit(Request $request, $assignmentId)
-{
-    $request->validate([
-        'file' => 'required|file|max:2048',
-    ]);
+        public function submit(Request $request, $assignmentId)
+    {
+        $request->validate([
+            'file' => 'required|file|max:2048',
+        ]);
 
-    $user = Auth::user();
+        $user = Auth::user();
+        $assignment = Assignment::findOrFail($assignmentId);
 
-    $filePath = $request->file('file')->store('submissions', 'public');
+        // ✅ Cegah pengumpulan jika sudah lewat deadline
+        if ($assignment->deadline && now()->greaterThan($assignment->deadline)) {
+            return redirect()->back()->with('error', '⛔ Batas waktu pengumpulan tugas telah berakhir.');
+        }
 
-    Submission::create([
-        'assignment_id' => $assignmentId,
-        'mentee_id' => $user->id,
-        'file' => $filePath,
-        'submitted_at' => now(),
-    ]);
+        // ✅ Cegah duplikat pengumpulan
+        $existing = Submission::where('assignment_id', $assignmentId)
+            ->where('mentee_id', $user->id)
+            ->first();
 
-    return redirect()->back()->with('success', 'Tugas berhasil dikumpulkan.');
-}
+        if ($existing) {
+            return redirect()->back()->with('error', '⚠️ Kamu sudah mengumpulkan tugas ini.');
+        }
+
+        $filePath = $request->file('file')->store('submissions', 'public');
+
+        Submission::create([
+            'assignment_id' => $assignmentId,
+            'mentee_id' => $user->id,
+            'file' => $filePath,
+            'submitted_at' => now(),
+        ]);
+
+        return redirect()->back()->with('success', '✅ Tugas berhasil dikumpulkan.');
+    }
+
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasAvatar
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -18,16 +19,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',        // admin, mentor, mentee
+        'role',         // admin, mentor, mentee
         'mentor_id',
         'nim',
         'kelas',
-        'photo',       // path relatif ke storage
+        'photo',        // file foto profil
+        'avatar_url',   // opsional (misal dari oauth/google)
     ];
 
-    /**
-     * Cast attributes
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
@@ -38,9 +37,9 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * Role Checkers
-     */
+    // =====================
+    // 🔒 Role Checkers
+    // =====================
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
@@ -56,11 +55,9 @@ class User extends Authenticatable
         return $this->role === 'mentee';
     }
 
-    /**
-     * Relasi
-     */
- 
-
+    // =====================
+    // 🔗 Relasi
+    // =====================
     public function courses(): HasMany
     {
         return $this->hasMany(Course::class, 'mentor_id');
@@ -76,19 +73,34 @@ class User extends Authenticatable
         return $this->belongsTo(User::class, 'mentor_id')->where('role', 'mentor');
     }
 
+    public function announcements(): HasMany
+    {
+        return $this->hasMany(Announcement::class, 'mentor_id');
+    }
+
+    // =====================
+    // 🖼️ Avatar Handling
+    // =====================
+
     /**
-     * Get URL foto user (helper untuk digunakan di mana saja)
+     * Digunakan oleh Filament (dashboard admin/mentor)
+     */
+    public function getFilamentAvatarUrl(): ?string
+    {
+        if ($this->photo) {
+            return Storage::url($this->photo);
+        }
+
+        return $this->avatar_url ?: 'https://ui-avatars.com/api/?name=' . urlencode($this->name);
+    }
+
+    /**
+     * Digunakan di frontend mentee
      */
     public function getPhotoUrl(): string
     {
         return $this->photo
             ? Storage::url($this->photo)
-            : url('/default-avatar.png'); // fallback default avatar
+            : 'https://ui-avatars.com/api/?name=' . urlencode($this->name);
     }
-
-    public function announcements()
-    {
-        return $this->hasMany(Announcement::class, 'mentor_id');
-    }
-
 }

@@ -25,6 +25,7 @@ class UserResource extends Resource
     {
         return $form->schema([
             Forms\Components\TextInput::make('name')
+                ->label('Nama')
                 ->required()
                 ->maxLength(255),
 
@@ -90,6 +91,7 @@ class UserResource extends Resource
             )
             ->columns([
                 TextColumn::make('name')
+                    ->label('Nama')
                     ->searchable()
                     ->sortable(),
 

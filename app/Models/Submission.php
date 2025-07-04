@@ -14,6 +14,7 @@ class Submission extends Model
         'feedback',
         'score',
         'submitted_at',
+        'deadline',
     ];
 
     public function assignment(): BelongsTo

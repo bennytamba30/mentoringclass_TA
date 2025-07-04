@@ -10,7 +10,6 @@ use Filament\Forms\Components\Textarea;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
@@ -33,26 +32,32 @@ class AssignmentsRelationManager extends RelationManager
                     ->label('Deskripsi')
                     ->required(),
 
-                DatePicker::make('deadline')
+                DateTimePicker::make('deadline') // ✅ ganti dari DatePicker ke DateTimePicker
                     ->label('Deadline')
-                    ->required(), // atau optional
+                    ->seconds(false) // sembunyikan detik, cukup sampai menit
+                    ->required(),   // jika perlu, bisa diubah ke ->nullable()
 
                 FileUpload::make('attachment')
                     ->label('File')
-                    ->directory('assignments') // folder penyimpanan
+                    ->directory('assignments')
                     ->preserveFilenames()
-                    ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']) // opsional
+                    ->acceptedFileTypes([
+                        'application/pdf',
+                        'application/msword',
+                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                    ])
                     ->required(false),
             ]);
     }
+
     public function table(Table $table): Table
     {
         return $table->columns([
             TextColumn::make('title')->label('Judul Tugas')->searchable(),
             TextColumn::make('description')->limit(50)->label('Deskripsi'),
-            TextColumn::make('deadline')->label('Deadline')->dateTime(),
+            TextColumn::make('deadline')->label('Deadline')->dateTime(), // ✅ tampilkan jam & tanggal
 
-            TextColumn::make('attachment') // ✅ tampilkan link
+            TextColumn::make('attachment')
                 ->label('File')
                 ->formatStateUsing(fn ($state) => $state ? '📄 ' . basename($state) : 'Tidak ada')
                 ->url(fn ($record) => $record->attachment ? asset('storage/' . $record->attachment) : null)

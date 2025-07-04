@@ -1,13 +1,12 @@
 <aside id="sidebar"
-    class="w-64 bg-white shadow-2xl fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 ease-in-out z-50 rounded-r-2xl md:rounded-none flex flex-col h-screen">
+    class="w-64 bg-white shadow-2xl fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 ease-in-out z-50 rounded-r-2xl md:rounded-none flex flex-col h">
     <div class="h-16 flex items-center justify-between px-6 border-b border-slate-200">
         <div class="flex items-center gap-3">
             <!-- SVG Icon for Mentoring Class Logo -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" stroke="currentColor"
-                stroke-width="2" class="text-indigo-600">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
-            </svg>
+            <div class="flex items-center gap-3">
+                <img src="{{ asset('image/LOGO.png') }}" alt="Mentoring Class Logo" class="w-8 h-8 object-contain">
+                <span class="text-base sm:text-lg md:text-xl font-bold text-slate-800"></span>
+            </div>
             <!-- Adjusted text size for mobile (text-base) and larger screens (sm:text-lg md:text-xl) -->
             <span class="text-base sm:text-lg md:text-xl font-bold text-slate-800">Mentoring Class</span>
         </div>
@@ -20,7 +19,7 @@
             </svg>
         </button>
     </div>
-    <nav class="flex-1 overflow-y-auto py-6">
+    <nav class="flex-1 h-full overflow-y-auto py-6">
         <ul class="space-y-2 px-4">
             <li>
                 <!-- Dasbor Icon (Home) -->
@@ -32,7 +31,7 @@
                         <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                         <polyline points="9 22 9 12 15 12 15 22" />
                     </svg>
-                    <span>Dasbor</span>
+                    <span>Dashboard</span>
                 </a>
             </li>
             <li>
@@ -87,9 +86,9 @@
             <button type="submit"
                 class="w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl text-red-600 hover:bg-red-50 hover:text-red-700 transition duration-200">
                 <!-- Logout Icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" class="lucide lucide-log-out">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-log-out">
                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
                     <polyline points="16 17 21 12 16 7" />
                     <line x1="21" x2="9" y1="12" y2="12" />

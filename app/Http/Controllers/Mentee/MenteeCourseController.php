@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Mentee;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Course;
+use App\Models\Meeting;
 
 class MenteeCourseController extends Controller
 {
@@ -13,10 +14,12 @@ class MenteeCourseController extends Controller
         $user = Auth::user();
         if ($user->role !== 'mentee') abort(403);
 
-        $courses = Course::where('mentor_id', $user->mentor_id)->get();
+          $meetings = \App\Models\Meeting::with(['courses' => function ($q) use ($user) {
+        $q->where('mentor_id', $user->mentor_id);
+        }])->get();
 
-        return view('mentee.courses.index', compact('courses'))->with('title', 'Kursus Saya');
-    }
+        return view('mentee.courses.index', compact('meetings'))->with('title', 'Kursus Saya');
+        }
 
     public function show($id)
     {
