@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Livewire\Mentor;
 
 use Livewire\Component;
@@ -10,64 +11,157 @@ use Illuminate\Support\Facades\Auth;
 
 class BulkAttendanceForm extends Component
 {
-    public $meetingId = null;
-    public $mentees = [];
+    public $meetingId = '';
     public $statuses = [];
     public $notes = [];
 
     public function updatedMeetingId($value)
     {
-        if (!$value) {
-            $this->mentees = [];
-            $this->statuses = [];
-            $this->notes = [];
-            return;
-        }
+        logger('updatedMeetingId dipanggil, value: ' . $value);
 
-        $mentorId = Auth::id();
+        // Reset status & notes
+        $this->statuses = [];
+        $this->notes = [];
 
-        $this->mentees = User::where('mentor_id', $mentorId)
-            ->where('role', 'mentee')
-            ->orderBy('name')
-            ->get();
-
-        // Inisialisasi status & notes default
+        // Inisialisasi default untuk setiap mentee
         foreach ($this->mentees as $mentee) {
             $this->statuses[$mentee->id] = 'hadir';
             $this->notes[$mentee->id] = '';
         }
     }
 
+    public function getMenteesProperty()
+    {
+        if (!$this->meetingId) {
+            return collect(); // return koleksi kosong agar aman di blade
+        }
+
+        return User::where('mentor_id', Auth::id())
+            ->where('role', 'mentee')
+            ->orderBy('name')
+            ->get();
+    }
+
     public function submit()
     {
-        $mentorId = Auth::id();
-
         if (!$this->meetingId) {
             session()->flash('error', 'Silakan pilih pertemuan terlebih dahulu.');
             return;
         }
 
-        foreach ($this->statuses as $menteeId => $status) {
-            Attendance::updateOrCreate(
-                [
-                    'meeting_id' => $this->meetingId,
-                    'mentee_id' => $menteeId,
-                ],
-                [
-                    'mentor_id' => $mentorId,
-                    'status' => $status,
-                    'note' => $this->notes[$menteeId] ?? '',
-                ]
-            );
-        }
+        try {
+            $mentorId = auth()->id();
 
-        session()->flash('success', 'Absensi berhasil disimpan.');
+            foreach ($this->statuses as $menteeId => $status) {
+                Attendance::updateOrCreate(
+                    [
+                        'meeting_id' => $this->meetingId,
+                        'mentee_id' => $menteeId,
+                    ],
+                    [
+                        'mentor_id' => $mentorId,
+                        'status' => $status,
+                        'note' => $this->notes[$menteeId] ?? '',
+                    ]
+                );
+            }
+
+            session()->flash('success', 'Absensi berhasil disimpan.');
+
+            // reset input jika perlu
+            $this->statuses = [];
+            $this->notes = [];
+
+        } catch (\Exception $e) {
+            logger()->error('Gagal menyimpan absensi: ' . $e->getMessage());
+            session()->flash('error', 'Terjadi kesalahan saat menyimpan absensi.');
+        }
     }
+
+
+
 
     public function render()
     {
+        \Log::info('Render Livewire:', [
+            'meetingId' => $this->meetingId,
+            'mentees_count' => $this->mentees->count()
+        ]);
+
         return view('livewire.mentor.bulk-attendance-form', [
             'meetings' => Meeting::orderBy('date')->get(),
+            'mentees' => $this->mentees,
         ]);
     }
 }
+// namespace App\Livewire\Mentor;
+
+// use Livewire\Component;
+// use App\Models\User;
+// use App\Models\Meeting;
+// use App\Models\Attendance;
+// use Illuminate\Support\Facades\Auth;
+
+// class BulkAttendanceForm extends Component
+// {
+//     public $meetingId = null;
+//     public $mentees = [];
+//     public $statuses = [];
+//     public $notes = [];
+
+//     public function updatedMeetingId($value)
+//     {
+//         if (!$value) {
+//             $this->mentees = [];
+//             $this->statuses = [];
+//             $this->notes = [];
+//             return;
+//         }
+
+//         $mentorId = Auth::id();
+
+//         $this->mentees = User::where('mentor_id', $mentorId)
+//             ->where('role', 'mentee')
+//             ->orderBy('name')
+//             ->get();
+
+//         // Inisialisasi status & notes default
+//         foreach ($this->mentees as $mentee) {
+//             $this->statuses[$mentee->id] = 'hadir';
+//             $this->notes[$mentee->id] = '';
+//         }
+//     }
+
+//     public function submit()
+//     {
+//         $mentorId = Auth::id();
+
+//         if (!$this->meetingId) {
+//             session()->flash('error', 'Silakan pilih pertemuan terlebih dahulu.');
+//             return;
+//         }
+
+//         foreach ($this->statuses as $menteeId => $status) {
+//             Attendance::updateOrCreate(
+//                 [
+//                     'meeting_id' => $this->meetingId,
+//                     'mentee_id' => $menteeId,
+//                 ],
+//                 [
+//                     'mentor_id' => $mentorId,
+//                     'status' => $status,
+//                     'note' => $this->notes[$menteeId] ?? '',
+//                 ]
+//             );
+//         }
+
+//         session()->flash('success', 'Absensi berhasil disimpan.');
+//     }
+
+//     public function render()
+//     {
+//         return view('livewire.mentor.bulk-attendance-form', [
+//             'meetings' => Meeting::orderBy('date')->get(),
+//         ]);
+//     }
+// }

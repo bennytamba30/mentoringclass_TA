@@ -12,6 +12,7 @@
     <!-- Tailwind CSS & AlpineJS for interactivity -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
+    @vite('resources/css/app.css')
 
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -84,6 +85,8 @@
         }
     </style>
     @stack('styles')
+    @livewireScripts
+@stack('scripts')
 </head>
 
 <body class="bg-slate-50 font-sans antialiased">
@@ -97,12 +100,12 @@
         <div class="flex-1 flex flex-col overflow-hidden">
 
             <!-- Header -->
-            @include('layouts.partials.header')
+            {{-- @include('layouts.partials.header') --}}
 
             <!-- Scrollable Main Content -->
             <main class="flex-1 overflow-y-auto bg-slate-50 p-4 sm:p-6 lg:p-8">
                 <div class="max-w-7xl mx-auto">
-                    @yield('content')
+                    {{-- @yield('content') --}}
                 </div>
             </main>
         </div>
