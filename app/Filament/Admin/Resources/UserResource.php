@@ -75,8 +75,10 @@ class UserResource extends Resource
 
             Forms\Components\FileUpload::make('photo')
                 ->label('Foto')
+                
                 ->image()
-                ->maxSize(2048) // 2MB
+                ->maxSize(4096) // 4MB
+                ->disk('public')
                 ->directory('photos')
                 ->visibility('public')
                 ->previewable(true),
@@ -108,11 +110,14 @@ class UserResource extends Resource
                     ->badge(),
 
                 ImageColumn::make('photo')
-                    ->label('Foto')
-                    ->circular()
-                    ->height(40)
-                    ->width(40)
-                    ->defaultImageUrl(asset('storage/default-avatar.png')),
+                ->label('Foto')
+                ->disk('public')
+                ->circular()
+                ->height(40)
+                ->width(40)
+                ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->name)),
+
+
 
                  TextColumn::make('mentor.name')
                     ->label('Mentor')

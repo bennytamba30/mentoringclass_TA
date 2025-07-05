@@ -98,12 +98,13 @@ class AdministratorResource extends Resource
                 TextColumn::make('email')->searchable(),
                 TextColumn::make('role')->badge(),
 
-              ImageColumn::make('photo')
-                    ->label('Foto')
-                    ->circular()
-                    ->height(40)
-                    ->width(40)
-                    ->defaultImageUrl(asset('storage/default-avatar.png')),
+               ImageColumn::make('photo')
+                ->label('Foto')
+                ->disk('public')
+                ->circular()
+                ->height(40)
+                ->width(40)
+                ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->name)),
             ])
             ->filters([
                 //

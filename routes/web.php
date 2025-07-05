@@ -9,7 +9,7 @@ use App\Http\Controllers\Mentee\MenteeAssignmentController;
 use App\Http\Controllers\Mentee\MenteeAttendanceController;
 use App\Livewire\Mentor\Attendance\BulkAttendancePage;
 use App\Http\Controllers\Mentee\MenteeAnnouncementController;
-use App\Http\Controllers\Mentee\ProfileController;
+use App\Http\Controllers\Mentee\MenteeProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,8 +59,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         //profil
-        Route::get('/profile', [\App\Http\Controllers\Mentee\ProfileController::class, 'edit'])->name('profile.edit');
-        Route::post('/profile', [\App\Http\Controllers\Mentee\ProfileController::class, 'update'])->name('profile.update');
+        Route::get('/profile', [MenteeProfileController::class, 'edit'])->name('profile.edit');
+        Route::post('/profile', [MenteeProfileController::class, 'update'])->name('profile.update');
+        Route::post('/profile/password', [MenteeProfileController::class, 'updatePassword'])->name('profile.updatePassword');
+
+    
+
 
         // ✅ Kursus Saya
         Route::get('/courses', [MenteeCourseController::class, 'index'])->name('courses.index');

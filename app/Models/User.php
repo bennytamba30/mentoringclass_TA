@@ -24,7 +24,6 @@ class User extends Authenticatable implements HasAvatar
         'nim',
         'kelas',
         'photo',        // file foto profil
-        'avatar_url',   // opsional (misal dari oauth/google)
     ];
 
     protected $casts = [
@@ -87,11 +86,9 @@ class User extends Authenticatable implements HasAvatar
      */
     public function getFilamentAvatarUrl(): ?string
     {
-        if ($this->photo) {
-            return Storage::url($this->photo);
-        }
-
-        return $this->avatar_url ?: 'https://ui-avatars.com/api/?name=' . urlencode($this->name);
+        return $this->photo
+            ? Storage::url($this->photo)
+            : 'https://ui-avatars.com/api/?name=' . urlencode($this->name);
     }
 
     /**
