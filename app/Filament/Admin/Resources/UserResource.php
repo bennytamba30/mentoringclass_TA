@@ -19,7 +19,7 @@ class UserResource extends Resource
     protected static ?string $navigationGroup = '👤 Manajemen User';
     protected static ?string $navigationLabel = 'User';
     protected static ?string $model = User::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-users';
 
     public static function form(Form $form): Form
     {
@@ -75,7 +75,6 @@ class UserResource extends Resource
 
             Forms\Components\FileUpload::make('photo')
                 ->label('Foto')
-                
                 ->image()
                 ->maxSize(4096) // 4MB
                 ->disk('public')
@@ -92,6 +91,14 @@ class UserResource extends Resource
                 $query->whereIn('role', ['mentor', 'mentee'])
             )
             ->columns([
+                ImageColumn::make('photo')
+                    ->label('Foto')
+                    ->disk('public')
+                    ->circular()
+                    ->height(40)
+                    ->width(40)
+                    ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->name)),
+
                 TextColumn::make('name')
                     ->label('Nama')
                     ->searchable()
@@ -108,16 +115,6 @@ class UserResource extends Resource
 
                 TextColumn::make('role')
                     ->badge(),
-
-                ImageColumn::make('photo')
-                ->label('Foto')
-                ->disk('public')
-                ->circular()
-                ->height(40)
-                ->width(40)
-                ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->name)),
-
-
 
                  TextColumn::make('mentor.name')
                     ->label('Mentor')
@@ -170,6 +167,11 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Mentee Dan mentor';
     }
 
 }

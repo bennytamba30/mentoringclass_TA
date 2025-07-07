@@ -21,13 +21,13 @@ class ModulesRelationManager extends RelationManager
     {
         return $form->schema([
             TextInput::make('title')
-                ->label('Judul Modul')
-                ->required(),
+            ->label('Judul Modul')
+            ->required(),
 
             Textarea::make('description')->nullable()
-                ->label('Deskripsi')
-                ->required(),
-
+            ->label('Deskripsi')
+            ->required(),
+            
            FileUpload::make('file_path')
             ->label('File Modul (PDF/DOCX)')
             ->directory('modul-files')
@@ -35,7 +35,9 @@ class ModulesRelationManager extends RelationManager
             ->acceptedFileTypes([
                 'application/pdf',
                 'application/msword',
-                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
+                'application/vnd.ms-powerpoint', // .ppt
+                'application/vnd.openxmlformats-officedocument.presentationml.presentation', // .pptx
             ])
             ->nullable()
         ]);

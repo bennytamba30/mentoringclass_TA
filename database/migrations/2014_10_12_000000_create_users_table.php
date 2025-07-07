@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('password');
             $table->enum('role', ['admin', 'mentor', 'mentee']);
             $table->foreignId('mentor_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->string('avatar_url')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

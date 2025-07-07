@@ -34,11 +34,11 @@ class MeetingResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('description')->label('Deskripsi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('date')->date(),
                 Tables\Columns\TextColumn::make('created_at')->label('Dibuat')->since(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])

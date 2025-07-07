@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->enum('status', ['hadir', 'izin', 'sakit', 'alfa'])->default('hadir');
             $table->text('note')->nullable();
             $table->timestamps();
+            $table->unique(['mentee_id', 'meeting_id'], 'unique_mentee_meeting');
         });
     }
 

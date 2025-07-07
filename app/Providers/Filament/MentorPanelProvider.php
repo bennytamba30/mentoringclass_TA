@@ -59,21 +59,12 @@ class MentorPanelProvider extends PanelProvider
                 in: app_path('Filament/Mentor/Widgets'),
                 for: 'App\\Filament\\Mentor\\Widgets'
             )
-            // ->discoverComponents(
-            //     __DIR__ . '/../../Livewire',
-            //     'App\\Livewire'
-            // )
+           
             ->pages([
                 Pages\Dashboard::class,
                 BulkAttendancePage::class,
             ])
-            // ->navigationItems([
-            //     NavigationItem::make('Absensi Massal')
-            //         ->label('Absensi Massal')
-            //         ->url(fn () => BulkAttendancePage::getUrl())
-            //         ->icon('heroicon-o-clipboard-document-check')
-            //         ->group('📆 Absensi'),
-            // ])
+            
 
             ->widgets([
                 Widgets\AccountWidget::class,

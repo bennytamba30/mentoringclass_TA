@@ -15,7 +15,7 @@ class UploadDocumentation extends Page implements Forms\Contracts\HasForms
     use Forms\Concerns\InteractsWithForms;
     use WithFileUploads;
 
-    protected static ?string $navigationIcon = 'heroicon-o-photo';
+    protected static ?string $navigationIcon = 'heroicon-m-photo';
     protected static ?string $navigationLabel = 'Upload Dokumentasi';
     protected static string $view = 'filament.mentor.pages.upload-documentation';
     protected static ?string $title = 'Upload Dokumentasi';

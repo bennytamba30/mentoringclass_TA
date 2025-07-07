@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mentoring Class - Tingkatkan Potensimu</title>
-    <!-- Memuat Tailwind CSS dari CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite('resources/css/app.css')
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -101,16 +101,19 @@
 
 <body class="overflow-x-hidden">
     <!-- Header/Navbar -->
-    <header class="bg-transparent absolute top-0 left-0 right-0 z-10 p-6">
-        <nav class="container mx-auto flex justify-between items-center">
-            <!-- Logo -->
-            <div class="text-2xl font-bold text-white">
-                Mentoring <span class="text-blue-modern">Class</span>
-            </div>
+    <header class="sticky top-0 left-0 right-0 z-30 bg-slate-900/70 backdrop-blur-lg border-b border-slate-800">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo dan Nama Brand -->
+            <a href="#" class="flex items-center space-x-3">
+                <img src="{{ asset('image/LOGO.png') }}" alt="Logo Mentoring Class" class="w-8 h-8">
+                <div class="text-xl font-bold text-slate-100">
+                    Mentoring <span class="text-indigo-400">Class</span>
+                </div>
+            </a>
             <!-- Tombol Login -->
-            <div class="block">
+            <div>
                 <a href="{{ route('login') }}"
-                    class="inline-block bg-blue-modern hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-300">
+                    class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 rounded-lg transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg shadow-indigo-500/20">
                     Login
                 </a>
             </div>
@@ -123,20 +126,19 @@
             <!-- Konten Kiri (Teks) -->
             <div class="w-full md:w-1/2 text-center md:text-left mb-12 md:mb-0">
                 <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6 animate-fade-in-down">
-                    Tingkatkan Potensimu dengan <br> Kelas Mentoring <br> <span
-                        class="text-blue-modern">Berkualitas</span>
+                    Belajar dan Berkembang Bersama di <span class="text-blue-modern">Mentoring Class</span>
                 </h1>
                 <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-lg mx-auto md:mx-0 animate-fade-in-up">
-                    Mentoring Class adalah platform inovatif yang menghubungkan Anda dengan mentor ahli untuk membimbing
-                    perjalanan belajar Anda. Akses materi eksklusif, sesi interaktif, dan laporan kemajuan terperinci.
+                    Platform resmi HMPS Manajemen Informatika untuk mempermudah proses mentoring. Di sini, mentor dan
+                    mentee terhubung dalam satu sistem untuk belajar,
+                    mengakses materi, mengerjakan tugas, dan mencatat progres secara digital.
                 </p>
                 <!-- Tombol Aksi -->
                 <div
                     class="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
-                    <!-- Menggunakan fungsi route() Laravel untuk menghasilkan URL dari nama rute -->
                     <a href="{{ route('login') }}"
-                        class="inline-block bg-gray-800 btn-dark text-white font-semibold py-3 px-8 rounded-xl transition duration-300 border border-gray-700 text-center">
-                        Log in
+                        class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-10 rounded-lg transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg shadow-indigo-500/20">
+                        Login
                     </a>
                 </div>
             </div>
@@ -144,11 +146,9 @@
             <!-- Konten Kanan (Gambar/Dashboard Mockup) -->
             <div class="w-full md:w-1/2 flex justify-center md:justify-end relative">
                 <!-- Gambar mockup dashboard -->
-                <img src="{{ asset('images/test.ARW') }}" alt="Mockup Dashboard Mentoring Class"
-                    class="max-w-full h-auto rounded-xl dashboard-shadow object-cover animate-fade-in-right"
-                    onerror="this.src='https://placehold.co/700x500/1a1a1a/cccccc?text=Mockup+Dashboard+Error'">
+                <img src="{{ asset('image/landing.png') }}" alt="Mockup Dashboard Mentoring Class"
+                    class="max-w-full h-auto rounded-xl dashboard-shadow object-cover animate-fade-in-right" </div>
             </div>
-        </div>
     </main>
 </body>
 

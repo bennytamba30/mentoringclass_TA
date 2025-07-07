@@ -86,7 +86,7 @@
     </style>
     @stack('styles')
     @livewireScripts
-@stack('scripts')
+    @stack('scripts')
 </head>
 
 <body class="bg-slate-50 font-sans antialiased">

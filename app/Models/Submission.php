@@ -17,6 +17,11 @@ class Submission extends Model
         'deadline',
     ];
 
+    protected $casts = [
+        'submitted_at' => 'datetime',
+    ];
+
+
     public function assignment(): BelongsTo
     {
         return $this->belongsTo(Assignment::class);

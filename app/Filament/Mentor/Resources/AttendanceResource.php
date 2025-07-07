@@ -21,7 +21,7 @@ class AttendanceResource extends Resource
     protected static ?string $navigationGroup = '📆 Pertemuan';
     protected static ?string $pluralLabel = 'Absensi';
     protected static ?string $navigationLabel = 'Absensi';
-
+   
 
 
     public static function form(Form $form): Form
@@ -101,7 +101,7 @@ class AttendanceResource extends Resource
     {
         return [];
     }
-
+    
 
     public static function getPages(): array
     {
@@ -120,5 +120,8 @@ class AttendanceResource extends Resource
             });
     }
 
-
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
 }

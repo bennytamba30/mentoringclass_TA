@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Dashboard Mentee' }}</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Inter -->
+    @vite('resources/css/app.css')
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -14,24 +13,32 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
+
         /* Custom scrollbar for better aesthetics */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
+
         ::-webkit-scrollbar-track {
-            background: #f0f2f5; /* Light grey background for track */
+            background: #f0f2f5;
+            /* Light grey background for track */
             border-radius: 10px;
         }
+
         ::-webkit-scrollbar-thumb {
-            background: #cbd5e1; /* Slate-300 equivalent for thumb */
+            background: #cbd5e1;
+            /* Slate-300 equivalent for thumb */
             border-radius: 10px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; /* Slate-400 equivalent on hover */
+            background: #94a3b8;
+            /* Slate-400 equivalent on hover */
         }
     </style>
 </head>
+
 <body class="bg-slate-100 text-slate-800 antialiased">
     <div class="flex flex-col md:flex-row min-h-screen">
 
@@ -136,7 +143,7 @@
         const profileDropdown = document.getElementById('profileDropdown');
 
         if (profileButton) {
-            profileButton.addEventListener('click', function (e) {
+            profileButton.addEventListener('click', function(e) {
                 e.stopPropagation(); // Prevent document click from immediately closing
                 if (profileDropdown) {
                     profileDropdown.classList.toggle('hidden');
@@ -144,11 +151,13 @@
             });
         }
 
-        document.addEventListener('click', function (e) {
-            if (profileDropdown && profileButton && !profileButton.contains(e.target) && !profileDropdown.contains(e.target)) {
+        document.addEventListener('click', function(e) {
+            if (profileDropdown && profileButton && !profileButton.contains(e.target) && !profileDropdown.contains(e
+                    .target)) {
                 profileDropdown.classList.add('hidden');
             }
         });
     </script>
 </body>
+
 </html>

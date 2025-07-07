@@ -19,7 +19,7 @@ class AdministratorResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-user';
     protected static ?string $navigationGroup = '👤 Manajemen User';
     protected static ?string $label = 'Administrator';
     protected static ?string $pluralLabel = '';
@@ -36,18 +36,6 @@ class AdministratorResource extends Resource
                 ->required()
                 ->email()
                 ->unique(ignoreRecord: true),
-
-            Forms\Components\TextInput::make('nim')
-                ->label('NIM')
-                ->numeric() // hanya angka
-                ->minLength(10)
-                ->maxLength(10)
-                ->rules(['digits:10'])
-                ->unique(ignoreRecord: true),
-
-            Forms\Components\TextInput::make('kelas')
-                ->label('Kelas')
-                ->maxLength(50),
 
             Forms\Components\Select::make('role')
                 ->label('Role')
@@ -90,27 +78,28 @@ class AdministratorResource extends Resource
                 $query->where('role', 'admin'); // Hanya tampilkan user dengan role 'admin'
             })
             ->columns([
-                TextColumn::make('name')->searchable()->sortable(),
-                TextColumn::make('nim')
-                    ->label('NIM'),
-                TextColumn::make('kelas')
-                    ->label('Kelas'),
+                ImageColumn::make('photo')
+                        ->label('Foto')
+                        ->disk('public')
+                        ->circular()
+                        ->height(40)
+                        ->width(40)
+                        ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->name)),
+                TextColumn::make('name')
+                ->label('Nama')
+                ->searchable()
+                ->sortable(),
                 TextColumn::make('email')->searchable(),
                 TextColumn::make('role')->badge(),
 
-               ImageColumn::make('photo')
-                ->label('Foto')
-                ->disk('public')
-                ->circular()
-                ->height(40)
-                ->width(40)
-                ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->name)),
+             
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

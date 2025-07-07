@@ -3,10 +3,11 @@
 
 namespace App\Livewire\Mentor;
 
-use Livewire\Component;
 use App\Models\User;
 use App\Models\Meeting;
+use Livewire\Component;
 use App\Models\Attendance;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class BulkAttendanceForm extends Component
@@ -83,7 +84,7 @@ class BulkAttendanceForm extends Component
 
     public function render()
     {
-        \Log::info('Render Livewire:', [
+        Log::info('Render Livewire:', [
             'meetingId' => $this->meetingId,
             'mentees_count' => $this->mentees->count()
         ]);

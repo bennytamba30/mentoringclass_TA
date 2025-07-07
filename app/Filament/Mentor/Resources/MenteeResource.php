@@ -14,7 +14,7 @@ class MenteeResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static ?string $navigationIcon = 'heroicon-m-users';
     protected static ?string $navigationLabel = 'Daftar Mentee';
     protected static ?string $pluralLabel = 'Mentees';
     protected static ?string $modelLabel = 'Mentee';
@@ -52,12 +52,6 @@ class MenteeResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                     ->label('Email')
                     ->searchable(),
-
-                
-
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Terdaftar')
-                    ->dateTime(),
             ])
             ->filters([])
             ->actions([])
@@ -81,5 +75,10 @@ class MenteeResource extends Resource
         return [
             'index' => Pages\ListMentees::route('/'),
         ];
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Mentee';
     }
 }
