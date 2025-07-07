@@ -15,6 +15,7 @@ class BulkAttendanceForm extends Component
     public $meetingId = '';
     public $statuses = [];
     public $notes = [];
+    public $showRecap = false;
 
     public function updatedMeetingId($value)
     {
@@ -78,6 +79,11 @@ class BulkAttendanceForm extends Component
             session()->flash('error', 'Terjadi kesalahan saat menyimpan absensi.');
         }
     }
+    
+public function toggleRecap()
+{
+    $this->showRecap = !$this->showRecap;
+}
 
 
 

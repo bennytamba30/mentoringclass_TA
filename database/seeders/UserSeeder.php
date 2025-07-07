@@ -66,7 +66,7 @@ class UserSeeder extends Seeder
             'email' => 'gracey123@gmail.com',
             'nim' => '2205102079',
             'kelas' => 'MI-6D',
-            'password' => Hash::make('gress123'),
+            'password' => Hash::make('gracey123'),
             'role' => 'mentee',
             'mentor_id' => $mentor1->id,
         ]);

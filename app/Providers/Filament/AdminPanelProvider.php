@@ -21,20 +21,12 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use App\Filament\Admin\Resources\AdminResource\Pages\AttendanceReport;
 use App\Filament\Admin\Resources\AdminResource\Pages\SubmissionReport;
 
 class AdminPanelProvider extends PanelProvider
 {
 
     
-protected function pages(): array
-{
-    return [
-        AttendanceReport::class,
-        
-    ];
-}
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -73,8 +65,7 @@ protected function pages(): array
             ->pages([
                 Pages\Dashboard::class,
                 \App\Filament\Admin\Pages\Dashboard::class,
-        
-                AttendanceReport::class
+            
             ])
             ->widgets([
                 Widgets\AccountWidget::class,

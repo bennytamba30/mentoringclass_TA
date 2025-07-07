@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Attendance extends Model
 {
     use HasFactory;
+    protected $with = ['mentee.mentor', 'meeting'];
 
    protected $fillable = [
     'meeting_id',
