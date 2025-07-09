@@ -4,7 +4,6 @@ namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\DocumentationResource\Pages;
 use App\Models\Documentation;
-use App\Models\Meeting;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\Resource;
@@ -14,7 +13,6 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Support\Enums\Alignment;
 
 class DocumentationResource extends Resource
 {
@@ -57,8 +55,8 @@ class DocumentationResource extends Resource
                     ->width(100)
                     ->disk('public')
                     ->circular()
-                    ->openUrlInNewTab() // ✅ untuk preview gambar besar
-                    ->url(fn ($record) => asset('storage/' . $record->image_path)), // link ke file storage
+                    ->openUrlInNewTab()
+                    ->url(fn ($record) => asset('storage/' . $record->image_path)),
                 TextColumn::make('meeting.title')
                     ->label('Pertemuan')
                     ->searchable()
@@ -76,9 +74,15 @@ class DocumentationResource extends Resource
                 SelectFilter::make('meeting_id')
                     ->label('Filter Pertemuan')
                     ->relationship('meeting', 'title')
-                    ->searchable()
+                    ->searchable(),
             ])
-            ->actions([])
+                        ->actions([
+                Tables\Actions\Action::make('download')
+                    ->label('Download')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->url(fn ($record) => route('admin.documentation.download', basename($record->image_path)))
+                    ->openUrlInNewTab(false),
+            ])
             ->bulkActions([]);
     }
 

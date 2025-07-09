@@ -23,6 +23,8 @@ class UploadDocumentation extends Page implements Forms\Contracts\HasForms
     public ?int $meeting_id = null;
     public $photo;
 
+    public bool $viewingHistory = false;
+
     public function mount(): void
     {
         $this->form->fill();
@@ -50,7 +52,7 @@ class UploadDocumentation extends Page implements Forms\Contracts\HasForms
         ];
     }
 
-   public function submit(): void
+    public function submit(): void
     {
         $data = $this->form->getState();
 
@@ -65,18 +67,15 @@ class UploadDocumentation extends Page implements Forms\Contracts\HasForms
             ->success()
             ->send();
 
-        // Reset semua nilai dan form
         $this->reset('meeting_id', 'photo');
         $this->form->fill();
     }
 
-    protected function getFormActions(): array
+    public function getDocumentationsProperty()
     {
-        return [
-            Forms\Components\Actions\Action::make('submit')
-                ->label('Upload')
-                ->submit('submit')
-                ->color('primary'),
-        ];
+        return Documentation::with('meeting')
+            ->where('mentor_id', Auth::id())
+            ->latest()
+            ->get();
     }
 }

@@ -9,6 +9,7 @@ use Filament\Tables;
 use App\Models\Mentee;
 use App\Models\Meeting;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use App\Filament\Admin\Resources\AttendanceResource\Pages;
@@ -29,6 +30,7 @@ class AttendanceResource extends Resource
                 ->relationship('meeting', 'title')
                 ->label('Pertemuan')
                 ->required(),
+                
 
             Select::make('mentee_id')
                 ->relationship('mentee', 'name')
@@ -51,7 +53,9 @@ class AttendanceResource extends Resource
     public static function table(Tables\Table $table): Tables\Table
     {
         return $table->columns([
-            TextColumn::make('meeting.title')->label('Pertemuan'),
+            TextColumn::make('meeting.title')
+            ->label('Pertemuan')
+            ->sortable(),
             TextColumn::make('mentee.name')->label('Mentee'),
             TextColumn::make('mentee.mentor.name') // asumsi relasi mentee → mentor → name
                 ->label('Mentor'),
@@ -74,6 +78,23 @@ class AttendanceResource extends Resource
                 ->label('Filter Pertemuan')
                 ->relationship('meeting', 'title')
          ])
+
+                ->headerActions([
+    Action::make('Download PDF')
+        ->url(function () {
+            $filters = request()->input('tableFilters', []);
+            $meetingId = $filters['meeting_id']['value'] ?? null;
+
+            return route('admin.attendance-report.pdf', array_filter([
+                'meeting_id' => $meetingId,
+            ]));
+        })
+        ->label('Download PDF')
+        ->icon('heroicon-o-arrow-down-tray')
+        ->openUrlInNewTab()
+])
+
+
 
         ->defaultSort('created_at', 'desc')
         ->searchable();

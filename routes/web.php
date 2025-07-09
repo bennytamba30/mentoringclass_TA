@@ -10,6 +10,8 @@ use App\Http\Controllers\Mentee\MenteeAttendanceController;
 use App\Livewire\Mentor\Attendance\BulkAttendancePage;
 use App\Http\Controllers\Mentee\MenteeAnnouncementController;
 use App\Http\Controllers\Mentee\MenteeProfileController;
+use App\Http\Controllers\Admin\AttendanceReportController;
+use App\Http\Controllers\Admin\DocumentationDownloadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +46,12 @@ Route::middleware('auth')->group(function () {
     })->name('logout');
 
 
+
+    Route::get('/admin/download-attendance-report', [AttendanceReportController::class, 'download'])
+    ->name('admin.attendance-report.pdf');
+
+    Route::get('/admin/documentation/download/{filename}', [DocumentationDownloadController::class, 'download'])
+    ->name('admin.documentation.download');
 
     /*
     |--------------------------------------------------------------------------
