@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mentoring Class - Tingkatkan Potensimu</title>
-     @vite('resources/css/app.css')
+    @vite('resources/css/app.css')
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0A0A0A; /* Slightly darker for more depth */
+            background-color: #0A0A0A;
+            /* Slightly darker for more depth */
             color: #f5f5f5;
         }
 
@@ -40,20 +41,46 @@
 
         /* Animations */
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .fade-in { animation: fadeIn 1s ease-out forwards; }
-        .fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-400 { animation-delay: 0.4s; }
-        .delay-600 { animation-delay: 0.6s; }
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .delay-200 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-400 {
+            animation-delay: 0.4s;
+        }
+
+        .delay-600 {
+            animation-delay: 0.6s;
+        }
 
         /* Flow diagram active button style */
         .flow-btn.active {
@@ -95,7 +122,11 @@
             <!-- Mobile Menu Button -->
             <div class="md:hidden">
                 <button id="mobile-menu-button" class="text-white focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
                 </button>
             </div>
         </nav>
@@ -107,7 +138,8 @@
                 <li><a href="#documentation" class="block py-2 hover:text-indigo-400">Dokumentasi</a></li>
                 <li><a href="#alur" class="block py-2 hover:text-indigo-400">Alur Sistem</a></li>
             </ul>
-            <a href="{{ route('login') }}" class="block mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 rounded-lg text-center transition-all duration-300">
+            <a href="{{ route('login') }}"
+                class="block mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 rounded-lg text-center transition-all duration-300">
                 Login
             </a>
         </div>
@@ -115,14 +147,17 @@
 
     <!-- Hero -->
     <main id="hero-section" class="relative pt-24 pb-12 md:py-32 overflow-hidden">
-        <div class="absolute inset-0 -z-10 h-full w-full bg-slate-950 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
+        <div
+            class="absolute inset-0 -z-10 h-full w-full bg-slate-950 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]">
+        </div>
         <div class="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
             <div class="w-full md:w-1/2 text-center md:text-left mb-12 md:mb-0">
                 <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6 fade-in-up">
                     Belajar dan Berkembang Bersama di <span class="text-indigo-gradient">Mentoring Class</span>
                 </h1>
                 <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-lg mx-auto md:mx-0 fade-in-up delay-200">
-                    Platform resmi HMPS Manajemen Informatika untuk mempermudah proses mentoring. Hubungkan mentor dan mentee dalam satu sistem terintegrasi.
+                    Platform resmi HMPS Manajemen Informatika untuk mempermudah proses mentoring. Hubungkan mentor dan
+                    mentee dalam satu sistem terintegrasi.
                 </p>
                 <div class="fade-in-up delay-400">
                     <a href="{{ route('login') }}"
@@ -143,9 +178,11 @@
         <div class="container mx-auto px-6 max-w-4xl text-center">
             <h2 class="text-3xl md:text-4xl font-bold mb-6">Tentang Mentoring Class</h2>
             <p class="text-gray-400 text-lg leading-relaxed">
-                Mentoring Class adalah adalah program dan sistem yang dikembangkan oleh HMPS Manajemen Informatika untuk membantu mahasiswa baru manajemen informatika meningkatkan kemampuan akademik dan soft skill.
-                Sistem ini memungkinkan proses belajar-mengajar antara mentor dan mentee berlangsung secara terstruktur, terukur, dan terdokumentasi. Setiap mentee bisa mengakses materi,
-                 melihat pengumuman, dan mengerjakan tugas kapan saja dan di mana saja.
+                Mentoring Class adalah adalah program dan sistem yang dikembangkan oleh HMPS Manajemen Informatika untuk
+                membantu mahasiswa baru manajemen informatika meningkatkan kemampuan akademik dan soft skill.
+                Sistem ini memungkinkan proses belajar-mengajar antara mentor dan mentee berlangsung secara terstruktur,
+                terukur, dan terdokumentasi. Setiap mentee bisa mengakses materi,
+                melihat pengumuman, dan mengerjakan tugas kapan saja dan di mana saja.
             </p>
         </div>
     </section>
@@ -155,22 +192,29 @@
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold text-center mb-12">Dokumentasi Kegiatan Mentoring</h2>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="group rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 hover:-translate-y-2">
-                    <img src="image/pengenalan.jpg" alt="Kegiatan 1" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105">
+                <div
+                    class="group rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 hover:-translate-y-2">
+                    <img src="image/sesipertama.jpg" alt="Kegiatan 1"
+                        class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105">
                     <div class="p-4 bg-slate-800">
-                        <p class="text-sm font-semibold text-gray-300">Sesi Mentoring Pertama - Pengantar dan Perkenalan</p>
+                        <p class="text-sm font-semibold text-gray-300">Mentoring Base 1 
+                        </p>
                     </div>
                 </div>
-                <div class="group rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 hover:-translate-y-2">
-                    <img src="image/pembukaan.jpg" alt="Kegiatan 2" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105">
+                <div
+                    class="group rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 hover:-translate-y-2">
+                    <img src="image/pengenalan.jpg" alt="Kegiatan 2"
+                        class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105">
                     <div class="p-4 bg-slate-800">
-                        <p class="text-sm font-semibold text-gray-300">Workshop Penggunaan Sistem Mentoring</p>
+                        <p class="text-sm font-semibold text-gray-300">Sesi pertama mentoring class - Pengantar dan Perkenalan</p>
                     </div>
                 </div>
-                <div class="group rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 hover:-translate-y-2">
-                    <img src="https://placehold.co/600x400/312e81/ffffff?text=Evaluasi" alt="Kegiatan 3" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105">
+                <div
+                    class="group rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 hover:-translate-y-2">
+                    <img src="image/IMG_2637.png" alt="Kegiatan 3"
+                        class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105">
                     <div class="p-4 bg-slate-800">
-                        <p class="text-sm font-semibold text-gray-300">Evaluasi dan Refleksi Mentees Minggu ke-4</p>
+                        <p class="text-sm font-semibold text-gray-300">Sesi Penutupan Mentoring Class</p>
                     </div>
                 </div>
             </div>
@@ -181,53 +225,82 @@
     <section id="alur" class="py-20 bg-slate-900 border-y border-slate-800">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold text-center mb-4">Alur Sistem Panel</h2>
-            <p class="text-center text-gray-400 mb-10 max-w-2xl mx-auto">Tampilan alur visual dari masing-masing panel untuk memahami proses mentoring secara menyeluruh.</p>
+            <p class="text-center text-gray-400 mb-10 max-w-2xl mx-auto">Tampilan alur visual dari masing-masing panel
+                untuk memahami proses mentoring secara menyeluruh.</p>
 
             <!-- Filter Buttons -->
             <div class="flex justify-center flex-wrap gap-4 mb-12">
-                <button onclick="filterFlow('mentor', this)" class="flow-btn px-5 py-2 text-sm font-semibold text-gray-300 bg-slate-800 hover:bg-slate-700 rounded-md transition">Panel Mentor</button>
-                <button onclick="filterFlow('mentee', this)" class="flow-btn px-5 py-2 text-sm font-semibold text-gray-300 bg-slate-800 hover:bg-slate-700 rounded-md transition">Panel Mentee</button>
+                <button onclick="filterFlow('mentor', this)"
+                    class="flow-btn px-5 py-2 text-sm font-semibold text-gray-300 bg-slate-800 hover:bg-slate-700 rounded-md transition">Panel
+                    Mentor</button>
+                <button onclick="filterFlow('mentee', this)"
+                    class="flow-btn px-5 py-2 text-sm font-semibold text-gray-300 bg-slate-800 hover:bg-slate-700 rounded-md transition">Panel
+                    Mentee</button>
             </div>
 
             <!-- Gallery Grid -->
             <div id="flow-gallery" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Mentor Items -->
                 <div class="gallery-item group" data-category="mentor">
-                    <div class="bg-slate-800 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2">
-                        <img src="image/dashboard_admin.png" alt="Mentor Dashboard" class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
-                        <div class="p-4"><h3 class="font-semibold text-white">Dashboard Utama Mentor</h3></div>
+                    <div
+                        class="bg-slate-800 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2">
+                        <img src="image/dashboard_mentor.png" alt="Mentor Dashboard"
+                            class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
+                        <div class="p-4">
+                            <h3 class="font-semibold text-white">Dashboard Utama Mentor</h3>
+                        </div>
                     </div>
                 </div>
                 <div class="gallery-item group" data-category="mentor">
-                    <div class="bg-slate-800 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2">
-                        <img src="image/course.png" alt="Mentor Materi" class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
-                        <div class="p-4"><h3 class="font-semibold text-white">Manajemen Materi & Tugas</h3></div>
+                    <div
+                        class="bg-slate-800 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2">
+                        <img src="image/kelola_course.png" alt="Mentor Materi"
+                            class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
+                        <div class="p-4">
+                            <h3 class="font-semibold text-white">Manajemen Materi & Tugas</h3>
+                        </div>
                     </div>
                 </div>
                 <div class="gallery-item group" data-category="mentor">
-                    <div class="bg-slate-800 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2">
-                        <img src="image/progress.png" alt="Mentor Progres" class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
-                        <div class="p-4"><h3 class="font-semibold text-white">Pemantauan Progres Mentee</h3></div>
+                    <div
+                        class="bg-slate-800 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2">
+                        <img src="image/progress_mentee.png" alt="Mentor Progres"
+                            class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
+                        <div class="p-4">
+                            <h3 class="font-semibold text-white">Pemantauan Progres Mentee</h3>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Mentee Items -->
                 <div class="gallery-item group" data-category="mentee">
-                    <div class="bg-slate-800 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2">
-                        <img src="image/dashboard_mentee.png" alt="Mentee Dashboard" class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
-                        <div class="p-4"><h3 class="font-semibold text-white">Dashboard Utama Mentee</h3></div>
+                    <div
+                        class="bg-slate-800 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2">
+                        <img src="image/mentee.png" alt="Mentee Dashboard"
+                            class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
+                        <div class="p-4">
+                            <h3 class="font-semibold text-white">Dashboard Utama Mentee</h3>
+                        </div>
                     </div>
                 </div>
                 <div class="gallery-item group" data-category="mentee">
-                    <div class="bg-slate-800 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2">
-                        <img src="image/image.png" alt="Mentee Materi" class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
-                        <div class="p-4"><h3 class="font-semibold text-white">Akses Materi & Pengumpulan Tugas</h3></div>
+                    <div
+                        class="bg-slate-800 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2">
+                        <img src="image/image_course.png" alt="Mentee Materi"
+                            class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
+                        <div class="p-4">
+                            <h3 class="font-semibold text-white">Akses Materi & Pengumpulan Tugas</h3>
+                        </div>
                     </div>
                 </div>
                 <div class="gallery-item group" data-category="mentee">
-                    <div class="bg-slate-800 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2">
-                        <img src="image/image1.png" alt="Mentee Progres" class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
-                        <div class="p-4"><h3 class="font-semibold text-white">Melihat Progres Belajar</h3></div>
+                    <div
+                        class="bg-slate-800 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2">
+                        <img src="image/image1.png" alt="Mentee Progres"
+                            class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105">
+                        <div class="p-4">
+                            <h3 class="font-semibold text-white">Melihat Progres Belajar</h3>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -240,7 +313,8 @@
             <div>
                 <h3 class="text-white text-lg font-semibold mb-4">Mentoring Class</h3>
                 <p class="text-sm leading-relaxed">
-                    Platform ini dirancang untuk mempermudah proses bimbingan antara mentor dan mentee secara digital, efisien, dan menyenangkan.
+                    Platform ini dirancang untuk mempermudah proses bimbingan antara mentor dan mentee secara digital,
+                    efisien, dan menyenangkan.
                 </p>
             </div>
 
@@ -263,7 +337,8 @@
                     </li>
                     <li class="flex items-center gap-3">
                         <i class="fab fa-instagram fa-fw"></i>
-                        <a href="https://www.instagram.com/mipolmed/" class="text-indigo-400 hover:underline">@hmpsmi_polmed</a>
+                        <a href="https://www.instagram.com/mipolmed/"
+                            class="text-indigo-400 hover:underline">@hmpsmi_polmed</a>
                     </li>
                     <li class="flex items-center gap-3">
                         <i class="fas fa-map-marker-alt fa-fw"></i>
@@ -289,7 +364,7 @@
         // Flow gallery filter
         function filterFlow(category, buttonElement) {
             const galleryItems = document.querySelectorAll('#flow-gallery .gallery-item');
-            
+
             // Filter logic
             galleryItems.forEach(item => {
                 if (category === 'all' || item.dataset.category === category) {
